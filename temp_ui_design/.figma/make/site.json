@@ -1,0 +1,10 @@
+{
+  "description": "Provides detailed data and visualization tools for analyzing open pit mines, aiding engineers and geologists in efficient resource management.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

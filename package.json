@@ -1,0 +1,7 @@
+{
+  "name": "geoguard-ai-root",
+  "private": true,
+  "scripts": {
+    "start": "npm run start --prefix bench-core-dashboard"
+  }
+}
