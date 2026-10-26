@@ -2,6 +2,7 @@
   "name": "geoguard-ai-root",
   "private": true,
   "scripts": {
-    "start": "npm run start --prefix bench-core-dashboard"
+    "start": "node scripts/dev.mjs",
+    "build": "npm run build --prefix bench-core-dashboard"
   }
 }

@@ -25,9 +25,10 @@ warnings.filterwarnings("ignore", category=UserWarning)
 # Configuration
 # ---------------------------------------------------------------------------
 
+PROJECT_ROOT = pathlib.Path(__file__).resolve().parent.parent
 REAL_DATA_PATHS = [
-    "data/geotechnical_sensors.csv",
-    "data/raw/rockfall_dataset.csv",
+    str(PROJECT_ROOT / "data" / "geotechnical_sensors.csv"),
+    str(PROJECT_ROOT / "data" / "raw" / "rockfall_dataset.csv"),
 ]
 
 # Mapping: CSV column name -> internal feature name
@@ -47,9 +48,10 @@ FEATURE_NAMES = list(CSV_COLUMN_MAP.keys())
 CLASS_NAMES = ["LOW", "HIGH"]
 TARGET_COLUMN = "label"
 
-MODEL_OUTPUT_DIR = "models"
+MODEL_OUTPUT_DIR = str(PROJECT_ROOT / "models")
 MODEL_FILENAME = "xgboost_geotechnical_gpu.json"
 SHAP_PLOT_FILENAME = "shap_summary.png"
+METRICS_FILENAME = "model_metrics.json"
 
 
 # ---------------------------------------------------------------------------
@@ -185,7 +187,10 @@ def _load_data() -> Tuple[np.ndarray, np.ndarray, str]:
         if os.path.isfile(csv_path):
             try:
                 X, y = _load_real_data(csv_path)
-                return X, y, "real"
+                # A CSV file is not evidence of field provenance. The bundled
+                # rockfall CSV is explicitly documented as synthetic.
+                source = "synthetic" if pathlib.Path(csv_path).name == "rockfall_dataset.csv" else "unverified_csv"
+                return X, y, source
             except Exception as exc:
                 print(f"[ml_engine] Real data load failed ({csv_path}): {exc}")
 
@@ -199,7 +204,13 @@ def _load_data() -> Tuple[np.ndarray, np.ndarray, str]:
 # ---------------------------------------------------------------------------
 
 def _get_device() -> str:
-    """Detect GPU availability and return the appropriate device string."""
+    """Return the configured device, defaulting to the stable CPU path."""
+    configured = os.environ.get("GEOGUARD_XGBOOST_DEVICE", "cpu").strip().lower()
+    if configured not in {"cpu", "cuda"}:
+        raise ValueError("GEOGUARD_XGBOOST_DEVICE must be 'cpu' or 'cuda'")
+    if configured == "cpu":
+        return "cpu"
+
     try:
         import torch
         if torch.cuda.is_available():
@@ -325,6 +336,23 @@ def train_and_evaluate_model(
     for fname, imp in sorted_importance:
         print(f"    {fname:30s}  {imp:.6f}")
 
+    metrics_path = os.path.join(model_output_dir, METRICS_FILENAME)
+    metrics = {
+        "model": "xgboost_geotechnical",
+        "data_source": data_source,
+        "samples": int(len(X)),
+        "features": feature_names,
+        "device": device,
+        "roc_auc": float(auc),
+        "accuracy": float(accuracy),
+        "class_distribution": {
+            "LOW": int(np.sum(y == 0)),
+            "HIGH": int(np.sum(y == 1)),
+        },
+    }
+    import json
+    pathlib.Path(metrics_path).write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+
     return {
         "model": model,
         "auc": auc,
@@ -338,6 +366,7 @@ def train_and_evaluate_model(
         "test_X": X_test,
         "test_y": y_test,
         "explainer": explainer,
+        "metrics_path": metrics_path,
     }
 
 

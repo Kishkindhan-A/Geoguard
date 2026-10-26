@@ -1,0 +1,9 @@
+{
+  "source": "https://gis.earthdata.nasa.gov/portal/rest/services/Landslides/COOLR_Events_Polygons/FeatureServer/0",
+  "retrieved_at": "2026-10-24T03:47:01.347402+00:00",
+  "features": 100,
+  "scope": "First 100 features, not a complete inventory or statistically representative sample",
+  "sha256": "ae9f2fe91dc33d928672aeec51061eb0d267f449a63c2c8fcffc85d7175cfa51",
+  "attribution": "NASA Goddard Space Flight Center; retain each feature's citation and contributor fields",
+  "usage": "Contextual GIS research only; no mine failure or negative labels inferred"
+}

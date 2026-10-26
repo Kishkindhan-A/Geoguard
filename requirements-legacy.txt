@@ -1,0 +1,5 @@
+# Optional dependencies for the archived Streamlit and geometry experiments.
+-r requirements.txt
+streamlit
+plotly
+kagglehub

@@ -1,0 +1,25 @@
+{
+  "model": "xgboost_geotechnical",
+  "data_source": "synthetic",
+  "samples": 200,
+  "features": [
+    "slope_angle_deg",
+    "discontinuity_density",
+    "weathering_index",
+    "bench_height_m",
+    "rainfall_mm",
+    "blast_vibration_index",
+    "water_seepage_index",
+    "loose_rock_index"
+  ],
+  "device": "cpu",
+  "roc_auc": 1.0,
+  "accuracy": 1.0,
+  "class_distribution": {
+    "LOW": 100,
+    "HIGH": 100
+  },
+  "validation_scope": "Random 80/20 split of 200 synthetic rows; not field validation",
+  "calibrated": false,
+  "operational_use": false
+}

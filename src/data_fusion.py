@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import os
 import pathlib
+from functools import lru_cache
 from typing import Any, Dict, Optional
 
 import numpy as np
@@ -43,6 +44,8 @@ FEATURE_NAMES = [
     "water_seepage_index",
     "loose_rock_index",
 ]
+PROJECT_ROOT = pathlib.Path(__file__).resolve().parent.parent
+DEFAULT_MODEL_PATH = PROJECT_ROOT / "models" / "xgboost_geotechnical_gpu.json"
 
 
 # ---------------------------------------------------------------------------
@@ -180,6 +183,42 @@ def _predict_probabilities(booster, feature_vector: np.ndarray) -> np.ndarray:
     return np.array([prob_low, prob_high], dtype=np.float64)
 
 
+@lru_cache(maxsize=4)
+def _get_shap_explainer(model_path: str):
+    """Build one TreeSHAP explainer per loaded model path."""
+    import shap
+
+    booster = _load_ml_model(model_path)
+    return shap.TreeExplainer(booster) if booster is not None else None
+
+
+def _predict_shap_values(model_path: str, feature_vector: np.ndarray) -> tuple[list[dict], float | None]:
+    """Return signed TreeSHAP attributions for the HIGH-risk model output."""
+    explainer = _get_shap_explainer(model_path)
+    if explainer is None:
+        return [], None
+
+    values = np.asarray(explainer.shap_values(
+        feature_vector.reshape(1, -1),
+    ), dtype=np.float64)
+    if values.ndim == 3:
+        values = values[0, :, -1]
+    else:
+        values = values[0]
+    expected = np.asarray(explainer.expected_value, dtype=np.float64).reshape(-1)
+    base_value = float(expected[-1] if expected.size else 0.0)
+    attributions = [
+        {
+            "feature": name,
+            "value": round(float(value), 6),
+            "positive": bool(value > 0),
+        }
+        for name, value in zip(FEATURE_NAMES, values)
+    ]
+    attributions.sort(key=lambda item: abs(item["value"]), reverse=True)
+    return attributions, base_value
+
+
 # ---------------------------------------------------------------------------
 # Risk rating
 # ---------------------------------------------------------------------------
@@ -196,12 +235,19 @@ def _unified_risk_rating(
     """
     prob_high = float(class_probs[1])
 
+    # Physics remains the safety gate. The classifier can raise a stable
+    # result to a review state, but cannot label a high-FoS slope as critical.
     if physics_fos < 1.0:
         return "CRITICAL RISK", 1.0
-    elif physics_fos < 1.15 or prob_high > 0.55:
-        return "HIGH RISK", round(prob_high, 4)
-    else:
-        return "LOW RISK", round(prob_high, 4)
+    if physics_fos < 1.25:
+        return "HIGH RISK", round(max(prob_high, 1.0 - physics_fos), 4)
+    if physics_fos < 1.5:
+        return "WARNING", round(max(prob_high, 1.0 - physics_fos), 4)
+    if prob_high >= 0.9:
+        return "MODEL REVIEW", round(prob_high, 4)
+    if prob_high >= 0.55:
+        return "MODERATE RISK", round(prob_high, 4)
+    return "LOW RISK", round(1.0 - prob_high, 4)
 
 
 # ---------------------------------------------------------------------------
@@ -218,7 +264,7 @@ def run_fusion_pipeline(
     blast_vibration_index: float,
     water_seepage_index: float,
     loose_rock_index: float,
-    model_path: str = "models/xgboost_geotechnical_gpu.json",
+    model_path: str | os.PathLike[str] = DEFAULT_MODEL_PATH,
 ) -> Dict[str, Any]:
     """Execute the full GeoGuard data-fusion pipeline.
 
@@ -257,12 +303,14 @@ def run_fusion_pipeline(
 
     class_probs = np.array([0.5, 0.5])
     model_loaded = False
-    shap_values_out = None
+    shap_values_out = []
+    shap_base_value = None
 
-    booster = _load_ml_model(model_path)
+    booster = _load_ml_model(str(model_path))
     if booster is not None:
         try:
             class_probs = _predict_probabilities(booster, feature_vector)
+            shap_values_out, shap_base_value = _predict_shap_values(str(model_path), feature_vector)
             model_loaded = True
         except Exception as exc:
             print(f"[data_fusion] ML inference fallback: {exc}")
@@ -280,6 +328,8 @@ def run_fusion_pipeline(
             "HIGH": round(float(class_probs[1]), 4),
         },
         "shap_values": shap_values_out,
+        "shap_base_value": shap_base_value,
+        "shap_output": "xgboost_raw_margin",
         "annotated_image": overlay_image,
         "confidence": confidence,
         "model_loaded": model_loaded,

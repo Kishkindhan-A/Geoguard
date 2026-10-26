@@ -1,0 +1,126 @@
+{
+  "reviewed_at": "2026-10-25",
+  "datasets": [
+    {
+      "name": "PointCrack3D research",
+      "url": "https://arxiv.org/abs/2111.11615",
+      "purpose": "3D natural-rock crack detection and point-density requirements.",
+      "status": "Literature reviewed; not integrated",
+      "license": "Verify separate dataset and software reuse terms.",
+      "limitation": "Published results do not establish GeoGuard performance. Public DEMs are not crack-resolution lidar."
+    },
+    {
+      "name": "PTZ rockfall detection and tracking research (2026)",
+      "url": "https://www.nature.com/articles/s41598-026-49008-x",
+      "purpose": "Temporal video detection and tracking as a distinct monitoring task.",
+      "status": "Literature reviewed; not integrated",
+      "license": "Publisher open-access article; verify separate dataset terms.",
+      "limitation": "Temporal real and simulated events differ from still-image screening. No model or accuracy is imported."
+    },
+    {
+      "name": "Open-pit coal mine slope crack dataset (ScienceDB)",
+      "url": "https://www.scidb.cn/en/detail?dataSetId=977527978dbe44bf9dc81bd07446b008",
+      "purpose": "Candidate mine-domain imagery for future held-out crack training.",
+      "status": "Catalog discovered; files and licensing not verified",
+      "license": "Unverified; not downloaded",
+      "limitation": "Not used in models or benchmark metrics."
+    },
+    {
+      "name": "Tongjiang Aerial Dataset",
+      "url": "https://zenodo.org/records/15614501",
+      "purpose": "Actual UAV quarry XYZ/RGB survey; original source retained and checksum-verified, with 900000 measured samples prepared for 3D rendering.",
+      "status": "Downloaded and integrated",
+      "license": "CC BY 4.0; Chen, Fang and Zhang; doi:10.5281/zenodo.15614501",
+      "limitation": "Survey acquired 2025-05-21; local coordinates, no published absolute CRS or independent ground-control accuracy."
+    },
+    {
+      "name": "USGS 3DEP and National Map imagery",
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+      "purpose": "Bingham Canyon actual elevation surface with aligned USDA/USGS orthoimagery, source-coordinate inspection and scale-preserving 3D measurement.",
+      "status": "Downloaded and integrated",
+      "license": "Elevation data courtesy of USGS; USDA, USGS The National Map: Orthoimagery.",
+      "limitation": "Historical multi-resolution mosaic; 6.5 m display sampling is not a 1 m survey accuracy claim. Source dates and vertical datum vary."
+    },
+    {
+      "name": "Mapzen Terrain Tiles on AWS",
+      "url": "https://registry.opendata.aws/terrain-tiles/",
+      "purpose": "Coordinate-based global elevation context; decoded Terrarium tiles reprojected into local UTM and exportable as GeoTIFF.",
+      "status": "Integrated and live-tested",
+      "license": "Mapzen and contributing source agencies; retain the published attribution linked in metadata.",
+      "limitation": "Regional context only; source resolution and dates vary and may predate current mine excavation."
+    },
+    {
+      "name": "CRACK-CH",
+      "url": "https://zenodo.org/records/6516913",
+      "purpose": "Downloaded and checksum-verified labelled stone images. A separate XGBoost feature baseline is evaluated on a held-out acquisition site.",
+      "status": "Downloaded \u00c2\u00b7 benchmarked",
+      "license": "CC BY 4.0 \u00c2\u00b7 Agrafiotis, Doulamis and Georgopoulos \u00c2\u00b7 doi:10.5281/zenodo.6516913",
+      "limitation": "60 masonry patches across two sites; no mine failures, weather labels or pixel masks. Excluded from warnings."
+    },
+    {
+      "name": "Open-Meteo",
+      "url": "https://open-meteo.com/en/docs",
+      "purpose": "Live coordinate-based 72-hour modelled precipitation history and 48-hour forecast, saved with each assessment.",
+      "status": "Integrated",
+      "license": "Data CC BY 4.0; free endpoint for non-commercial use. Commercial deployment requires an appropriate service plan.",
+      "limitation": "Gridded model output is not a mine rain gauge. Forecast windows indicate weather exposure, not rockfall time."
+    },
+    {
+      "name": "NASA COOLR",
+      "url": "https://gis.earthdata.nasa.gov/portal/rest/services/Landslides/COOLR_Events_Polygons/FeatureServer",
+      "purpose": "Reproducible download of a bounded sample of mapped landslide-event polygons for contextual GIS research.",
+      "status": "Downloaded 100-feature context sample",
+      "license": "NASA Goddard Space Flight Center; retain inventory-specific citation and contributor terms in the downloaded properties.",
+      "limitation": "Regional event inventories, not a matched mine-level event/non-event dataset. Never used as negative samples or to train failure probabilities."
+    },
+    {
+      "name": "ReachBot rock crack dataset",
+      "url": "https://github.com/JosselinSomervilleRoberts/ReachBot-Predictor",
+      "purpose": "Research route for manually annotated rock-face crack segmentation and thin-line metrics such as LineAcc.",
+      "status": "Reviewed \u00c2\u00b7 not downloaded",
+      "license": "Check dataset-specific terms in the authors' linked Google Drive release before reuse.",
+      "limitation": "A rock-crack segmentation task does not provide time-to-failure labels. No claim of integration or training on this dataset."
+    },
+    {
+      "name": "Mountain Rockfall Dataset",
+      "url": "https://github.com/muranhb/MRDataset",
+      "purpose": "Candidate future benchmark for detecting rockfall objects in mountain scenes.",
+      "status": "Reviewed \u00c2\u00b7 not downloaded",
+      "license": "Academic / educational use; annotation licence CC BY 4.0 does not override third-party image rights. Publisher download uses Baidu.",
+      "limitation": "Detects visible rockfall objects, not precursor cracks or future event times. The README image total and listed split totals differ; verify the release before use."
+    },
+    {
+      "name": "SDNET2018",
+      "url": "https://digitalcommons.usu.edu/all_datasets/48/",
+      "purpose": "Large concrete-crack classification benchmark considered for future transfer-learning experiments.",
+      "status": "Reviewed \u00c2\u00b7 not downloaded",
+      "license": "CC BY 4.0 \u00c2\u00b7 Maguire, Dorafshan and Thomas \u00c2\u00b7 doi:10.15142/T3TD19",
+      "limitation": "Concrete deck, wall and pavement patches differ from mine rock faces; classification labels are not segmentation masks or failure labels."
+    },
+    {
+      "name": "Bundled rockfall CSV",
+      "url": "/api/research",
+      "purpose": "Existing 200-row synthetic geotechnical classifier retained for paper-method comparison and TreeSHAP demonstration.",
+      "status": "Bundled \u00c2\u00b7 synthetic",
+      "license": "Local prototype dataset; authorship and redistribution licence require confirmation.",
+      "limitation": "100% random-split accuracy is synthetic-demo performance, not mine validation. Classifier and 70/30 paper comparison are excluded from warning generation."
+    }
+  ],
+  "references": [
+    {
+      "title": "Romana, Tomas and Seron, Slope Mass Rating geomechanics classification thirty years review",
+      "url": "https://personal.ua.es/es/roberto-tomas/documentos/isrm-smr.pdf",
+      "used_for": "Planar SMR F1/F2/F3 and excavation F4 lookup tables"
+    },
+    {
+      "title": "A new radar-based system for detecting and tracking rockfall in open pit mines",
+      "url": "https://papers.acg.uwa.edu.au/d/2025_79_Stopka/79_Stopka.pdf",
+      "used_for": "Rockfall monitoring context and limits of precursor-based warning"
+    },
+    {
+      "title": "Slope Stability Monitoring Methods and Technologies for Open-Pit Mining A Systematic Review",
+      "url": "https://www.mdpi.com/2673-6489/5/2/32",
+      "used_for": "Monitoring modalities, temporal and environmental limitations"
+    }
+  ]
+}

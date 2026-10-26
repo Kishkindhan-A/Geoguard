@@ -1,0 +1,308 @@
+{
+  "url": "https://zenodo.org/records/6516913/files/CRACK-CH.zip?download=1",
+  "md5": "027ebd7aa3a7a2eec661b615ff862caf",
+  "license": "CC BY 4.0",
+  "citation": "Agrafiotis, Doulamis and Georgopoulos, CRACK-CH, doi:10.5281/zenodo.6516913",
+  "files": [
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_1.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_10.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_11.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_12.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_13.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_14.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_2.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_3.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_4.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_5.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_6.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_7.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_8.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_9.jpg",
+      "site": "Naillac",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_1.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_10.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_11.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_12.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_13.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_14.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_15.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_16.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_17.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_18.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_19.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_2.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_20.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_21.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_22.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_3.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_4.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_5.JPG",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_6.JPG",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_7.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_8.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_9.jpg",
+      "site": "Naillac",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_1.JPG",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_10.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_11.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_12.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_13.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_14.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_15.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_16.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_2.JPG",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_3.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_4.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_5.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_6.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_7.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_8.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Negative/stnik_neg_9.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 0
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_1.JPG",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_2.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_3.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_4.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_5.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_6.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_7.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    },
+    {
+      "file": "CRACK-CH/Saint Nikolaos Fort/Positive/stnik_pos_8.jpg",
+      "site": "Saint Nikolaos Fort",
+      "label": 1
+    }
+  ]
+}

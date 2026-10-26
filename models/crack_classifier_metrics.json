@@ -1,0 +1,233 @@
+{
+  "dataset": "CRACK-CH",
+  "doi": "10.5281/zenodo.6516913",
+  "license": "CC BY 4.0",
+  "archive_md5": "027ebd7aa3a7a2eec661b615ff862caf",
+  "archive_sha256": "0951e01cbd4973aa2f12dbdfd38029ea8a6ed4b93f8d91d8ce35887268d41325",
+  "source_url": "https://zenodo.org/records/6516913/files/CRACK-CH.zip?download=1",
+  "samples": 60,
+  "sites": {
+    "Naillac": 36,
+    "Saint Nikolaos Fort": 24
+  },
+  "split": "Train Saint Nikolaos Fort; hold out all Naillac patches",
+  "train_count": 24,
+  "test_count": 36,
+  "accuracy": 0.4722222222222222,
+  "balanced_accuracy": 0.4902597402597403,
+  "roc_auc": 0.5876623376623377,
+  "confusion_matrix_labels": [
+    "no crack",
+    "crack"
+  ],
+  "confusion_matrix": [
+    [
+      8,
+      6
+    ],
+    [
+      13,
+      9
+    ]
+  ],
+  "features": [
+    "dark_line_mean",
+    "dark_line_p90",
+    "dark_line_fraction",
+    "edge_fraction",
+    "gradient_mean",
+    "grey_std",
+    "dark_fraction",
+    "line_long_extent",
+    "line_count",
+    "contrast"
+  ],
+  "limitations": [
+    "Very small two-site dataset",
+    "Stone masonry, not mine rock",
+    "No pixel masks, physical crack widths, event times or weather labels",
+    "Patch-level transfer score excluded from risk warnings"
+  ],
+  "test_predictions": [
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_1.jpg",
+      "label": 0,
+      "score": 0.2759022116661072
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_10.jpg",
+      "label": 0,
+      "score": 0.5012664794921875
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_11.jpg",
+      "label": 0,
+      "score": 0.8590328693389893
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_12.jpg",
+      "label": 0,
+      "score": 0.44450581073760986
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_13.jpg",
+      "label": 0,
+      "score": 0.269488662481308
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_14.jpg",
+      "label": 0,
+      "score": 0.6928083300590515
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_2.jpg",
+      "label": 0,
+      "score": 0.5012664794921875
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_3.jpg",
+      "label": 0,
+      "score": 0.6297038793563843
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_4.jpg",
+      "label": 0,
+      "score": 0.2759022116661072
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_5.jpg",
+      "label": 0,
+      "score": 0.11196300387382507
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_6.jpg",
+      "label": 0,
+      "score": 0.5565357208251953
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_7.jpg",
+      "label": 0,
+      "score": 0.28086933493614197
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_8.jpg",
+      "label": 0,
+      "score": 0.22749878466129303
+    },
+    {
+      "file": "CRACK-CH/Naillac/Negative/naillac_neg_9.jpg",
+      "label": 0,
+      "score": 0.28086933493614197
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_1.jpg",
+      "label": 1,
+      "score": 0.6909037828445435
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_10.jpg",
+      "label": 1,
+      "score": 0.7437012791633606
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_11.jpg",
+      "label": 1,
+      "score": 0.44450581073760986
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_12.jpg",
+      "label": 1,
+      "score": 0.7437012791633606
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_13.jpg",
+      "label": 1,
+      "score": 0.28086933493614197
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_14.jpg",
+      "label": 1,
+      "score": 0.12916159629821777
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_15.jpg",
+      "label": 1,
+      "score": 0.3740523159503937
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_16.jpg",
+      "label": 1,
+      "score": 0.28086933493614197
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_17.jpg",
+      "label": 1,
+      "score": 0.28086933493614197
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_18.jpg",
+      "label": 1,
+      "score": 0.28086933493614197
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_19.jpg",
+      "label": 1,
+      "score": 0.5297002792358398
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_2.jpg",
+      "label": 1,
+      "score": 0.44450581073760986
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_20.jpg",
+      "label": 1,
+      "score": 0.28086933493614197
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_21.jpg",
+      "label": 1,
+      "score": 0.44450581073760986
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_22.jpg",
+      "label": 1,
+      "score": 0.44450581073760986
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_3.jpg",
+      "label": 1,
+      "score": 0.6013078689575195
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_4.jpg",
+      "label": 1,
+      "score": 0.2759022116661072
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_5.JPG",
+      "label": 1,
+      "score": 0.08626580238342285
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_6.JPG",
+      "label": 1,
+      "score": 0.5297002792358398
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_7.jpg",
+      "label": 1,
+      "score": 0.8590328693389893
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_8.jpg",
+      "label": 1,
+      "score": 0.7437012791633606
+    },
+    {
+      "file": "CRACK-CH/Naillac/Positive/naillac_pos_9.jpg",
+      "label": 1,
+      "score": 0.8590328693389893
+    }
+  ]
+}

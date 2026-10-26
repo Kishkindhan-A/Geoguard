@@ -4,26 +4,32 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "dev:backend": "cd .. && python -m uvicorn api.server:app --host 0.0.0.0 --port 8000 --reload",
-    "start": "start /b python -m uvicorn api.server:app --host 0.0.0.0 --port 8000 --app-dir .. && vite --host 0.0.0.0",
+    "dev": "vite --host 127.0.0.1",
+    "dev:backend": "cd .. && .venv\\Scripts\\python.exe -m uvicorn api.server:app --host 127.0.0.1 --port 8000 --reload",
+    "start": "node ../scripts/dev.mjs",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "train:model": "cd .. && .venv\\Scripts\\python.exe scripts/train_model.py",
+    "train:3d": "cd .. && .venv\\Scripts\\python.exe scripts/train_3d_converter.py"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-three-fiber": "^6.0.13",
     "three": "^0.185.1"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.22",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/three": "^0.185.4",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17",
     "typescript": "^5.7.0",
     "vite": "^6.0.0"
   }

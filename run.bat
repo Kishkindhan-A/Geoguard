@@ -1,3 +1,3 @@
 @echo off
-cd bench-core-dashboard
-npm run start
+cd /d "%~dp0"
+npm start

@@ -306,3 +306,208 @@ def analyze_image_risks(image_input) -> dict:
             else "LOW"
         ),
     }
+
+
+# ---------------------------------------------------------------------------
+# Crack detection engine
+# ---------------------------------------------------------------------------
+
+def _crack_colormap_lut():
+    """Build a 256-entry BGR LUT: green -> yellow -> orange -> dark red.
+
+    This is the crack-aware heatmap the user requested: low risk starts at
+    green and escalates through yellow/orange to dark red at maximum danger.
+    """
+    lut = np.zeros((256, 1, 3), dtype=np.uint8)
+    stops = [
+        (0,   30, 200,  60),    # green
+        (96,  60, 200,  40),    # yellow-green
+        (160, 40, 180,  20),    # orange
+        (224, 30,  60,  10),    # red
+        (255, 10,  10,   5),    # dark red
+    ]
+    for i in range(256):
+        for j in range(len(stops) - 1):
+            if i <= stops[j + 1][0]:
+                t = (i - stops[j][0]) / max(1, stops[j + 1][0] - stops[j][0])
+                b = int(stops[j][1] + (stops[j + 1][1] - stops[j][1]) * t)
+                g = int(stops[j][2] + (stops[j + 1][2] - stops[j][2]) * t)
+                r = int(stops[j][3] + (stops[j + 1][3] - stops[j][3]) * t)
+                lut[i] = [b, g, r]
+                break
+    return lut
+
+
+CRACK_COLORMAP_LUT = _crack_colormap_lut()
+
+
+def detect_cracks(
+    image_input,
+    min_crack_length: int = 25,
+    output_size: Tuple[int, int] = (512, 512),
+) -> dict:
+    """Detect cracks in a pit-wall image, rank them by danger, and mark the
+    most dangerous crack in red.
+
+    Returns
+    -------
+    dict with keys:
+        overlay_rgb : ndarray
+            Image with all cracks outlined and the most dangerous crack
+            highlighted in bright red with a marker.
+        crack_map : ndarray
+            Grayscale crack probability map (0-255).
+        heatmap_rgb : ndarray
+            Green -> dark-red crack-aware heatmap.
+        cracks : list[dict]
+            Each crack: {id, length_px, width_px, danger_score, risk_level,
+                         bbox, centroid, orientation_deg}
+        most_dangerous : dict or None
+            The single most dangerous crack.
+        metrics : dict
+            {crack_count, max_danger, mean_danger, high_danger_pct}
+    """
+    empty = {
+        "overlay_rgb": None, "crack_map": None, "heatmap_rgb": None,
+        "cracks": [], "most_dangerous": None,
+        "metrics": {"crack_count": 0, "max_danger": 0.0, "mean_danger": 0.0, "high_danger_pct": 0.0},
+    }
+    if cv2 is None:
+        return empty
+
+    img = _load_image(image_input)
+    if img is None:
+        return empty
+
+    img = cv2.resize(img, output_size, interpolation=cv2.INTER_AREA)
+    if len(img.shape) == 3:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = img
+
+    # --- Crack enhancement: dark thin lines stand out against rock ---
+    # Morphological black-hat highlights dark cracks on a lighter background.
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
+    blackhat = cv2.morphologyEx(gray, cv2.MORPH_BLACKHAT, kernel)
+
+    # Adaptive threshold to isolate crack lines
+    thresh = cv2.adaptiveThreshold(
+        blackhat, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+        cv2.THRESH_BINARY, 21, -6,
+    )
+
+    # Clean up noise
+    thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)))
+    thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
+
+    # Crack probability map (smooth)
+    crack_map = cv2.GaussianBlur(blackhat, (5, 5), 0)
+    crack_map = cv2.normalize(crack_map, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)  # type: ignore[arg-type]
+
+    # --- Find crack contours ---
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    cracks = []
+    for idx, cnt in enumerate(contours):
+        length = cv2.arcLength(cnt, True)
+        if length < min_crack_length:
+            continue
+        area = cv2.contourArea(cnt)
+        if area < 4:
+            continue
+        x, y, w, h = cv2.boundingRect(cnt)
+        # Width estimate: area / length
+        width = area / max(length, 1)
+        # Orientation from min-area rectangle
+        rect = cv2.minAreaRect(cnt)
+        angle = abs(rect[2]) if rect[2] is not None else 0.0
+
+        # Danger scoring: longer + wider + more vertical = more dangerous
+        # (vertical cracks propagate and open under gravity)
+        length_norm = min(1.0, length / (output_size[0] * 0.5))
+        width_norm = min(1.0, width / 20.0)
+        verticality = min(1.0, abs(90.0 - angle) / 90.0)
+        # Cracks near the top of the slope are more dangerous (overhang)
+        top_factor = 1.0 - (y / max(output_size[1], 1))
+
+        danger = (
+            0.45 * length_norm
+            + 0.25 * width_norm
+            + 0.20 * verticality
+            + 0.10 * top_factor
+        )
+        danger = float(np.clip(danger, 0.0, 1.0))
+
+        if danger < 0.15:
+            continue
+
+        if danger >= 0.7:
+            risk_level = "CRITICAL"
+        elif danger >= 0.5:
+            risk_level = "HIGH"
+        elif danger >= 0.3:
+            risk_level = "MODERATE"
+        else:
+            risk_level = "LOW"
+
+        cracks.append({
+            "id": idx,
+            "length_px": round(float(length), 1),
+            "width_px": round(float(width), 2),
+            "danger_score": round(danger, 3),
+            "risk_level": risk_level,
+            "bbox": [int(x), int(y), int(w), int(h)],
+            "centroid": [int(x + w / 2), int(y + h / 2)],
+            "orientation_deg": round(float(angle), 1),
+        })
+
+    # Sort by danger descending
+    cracks.sort(key=lambda c: c["danger_score"], reverse=True)
+    for i, c in enumerate(cracks):
+        c["rank"] = i + 1
+
+    most_dangerous = cracks[0] if cracks else None
+
+    # --- Build overlay ---
+    overlay = img.copy()
+    for c in cracks:
+        x, y, w, h = c["bbox"]
+        color = (0, 0, 255) if c["risk_level"] == "CRITICAL" else \
+                (0, 165, 255) if c["risk_level"] == "HIGH" else \
+                (0, 215, 255) if c["risk_level"] == "MODERATE" else \
+                (0, 200, 0)
+        cv2.rectangle(overlay, (x, y), (x + w, y + h), color, 1, cv2.LINE_AA)
+
+    # Highlight the most dangerous crack in bright red with a marker
+    if most_dangerous is not None:
+        x, y, w, h = most_dangerous["bbox"]
+        cx, cy = most_dangerous["centroid"]
+        cv2.rectangle(overlay, (x - 3, y - 3), (x + w + 3, y + h + 3), (0, 0, 255), 3, cv2.LINE_AA)
+        # Crosshair marker on centroid
+        cv2.drawMarker(overlay, (cx, cy), (0, 0, 255), cv2.MARKER_CROSS, 24, 2, cv2.LINE_AA)
+        # Danger label
+        label = f"DANGER {most_dangerous['danger_score']*100:.0f}%"
+        cv2.putText(overlay, label, (x, max(18, y - 8)), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.6, (0, 0, 255), 2, cv2.LINE_AA)
+
+    # --- Build green -> dark-red crack-aware heatmap ---
+    heatmap_bgr = CRACK_COLORMAP_LUT[crack_map, 0]
+    heatmap_rgb = cv2.cvtColor(heatmap_bgr, cv2.COLOR_BGR2RGB)
+
+    overlay_rgb = cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB)
+
+    metrics = {
+        "crack_count": len(cracks),
+        "max_danger": round(max((c["danger_score"] for c in cracks), default=0.0), 3),
+        "mean_danger": round(float(np.mean([c["danger_score"] for c in cracks])) if cracks else 0.0, 3),
+        "high_danger_pct": round(float(sum(1 for c in cracks if c["danger_score"] >= 0.5)) / max(len(cracks), 1) * 100, 1),
+    }
+
+    return {
+        "overlay_rgb": overlay_rgb,
+        "crack_map": crack_map,
+        "heatmap_rgb": heatmap_rgb,
+        "cracks": cracks,
+        "most_dangerous": most_dangerous,
+        "metrics": metrics,
+    }
